@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 # Membaca gambar
-img = cv2.imread("C:/Candra/[1] KULIAH/[3] Semester 3/PCD/Source Code/gusadit.jpg")
+img = cv2.imread("gambar.jpeg")
 
 # Mendapatkan dimensi gambar
 height, width = img.shape[:2]
