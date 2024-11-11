@@ -16,7 +16,7 @@ def adjust_brightness(img, brightness_value):
     
     return brightened_img
 
-img = cv2.imread("sample.jpeg")
+img = cv2.imread("gambar.jpeg")
 
 brightness_value = int(input("Masukkan nilai Brightness (-255 hingga 255): "))
 brightened_img = adjust_brightness(img, brightness_value)
