@@ -58,14 +58,16 @@ class EffectFrame(ctk.CTkFrame):
     def __init__(self, parent, effect_vars):
         super().__init__(master=parent, fg_color='transparent')
         self.pack(expand=True, fill='both')
-
         DropDownPanel(self, effect_vars['effect'], EFFECT_OPTIONS)
+        SegmentedPanel(self, 'Threshold', effect_vars['threshold'], THRESHOLD_OPTIONS)
+        SegmentedPanel(self, 'Histogram Equalization', effect_vars['equalize'], EQUALIZE_OPTINS)
         SliderPanel(self, 'Blur', effect_vars['blur'], 0, 30)
         SliderPanel(self, 'Contrast', effect_vars['contrast'], 0, 10)
         RevertButton(self, 
                     (effect_vars['blur'], BLUR_DEFAULT),
                     (effect_vars['contrast'], CONTRAST_DEFAULT),
-                    (effect_vars['effect'], EFFECT_OPTIONS[0])
+                    (effect_vars['effect'], EFFECT_OPTIONS[0]),
+                    (effect_vars['threshold'], THRESHOLD_OPTIONS[0]),
                     )
 
 class ExportFrame(ctk.CTkFrame):

@@ -58,6 +58,8 @@ class App(ctk.CTk):
             'blur' : ctk.DoubleVar(value=BLUR_DEFAULT),
             'contrast' : ctk.IntVar(value=CONTRAST_DEFAULT),
             'effect' : ctk.StringVar(value=EFFECT_OPTIONS[0]),
+            'threshold' : ctk.StringVar(value=THRESHOLD_OPTIONS[0]),
+            'equalize' : ctk.StringVar(value=EQUALIZE_OPTINS[0])
         }
 
         # tracing
@@ -139,6 +141,25 @@ class App(ctk.CTk):
 
         if self.effect_vars['contrast'].get() != CONTRAST_DEFAULT:
             self.image = self.image.filter(ImageFilter.UnsharpMask(self.effect_vars['contrast'].get()))
+
+        # threshold
+        if self.effect_vars['threshold'].get() != THRESHOLD_OPTIONS[0]:
+            arr_img = np.array(self.image)
+            gray_image = cv2.cvtColor(arr_img, cv2.COLOR_BGR2GRAY)
+            _, threshold_image = cv2.threshold(gray_image, 127, 255, cv2.THRESH_BINARY)
+            self.image = Image.fromarray(threshold_image.astype('uint8'))
+
+        # equalization
+        if self.effect_vars['equalize'].get() != EQUALIZE_OPTINS[0]:
+            arr_img = np.array(self.image)
+            clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+            r, g, b = cv2.split(arr_img)
+            r_clahe = clahe.apply(r)
+            g_clahe = clahe.apply(g)
+            b_clahe = clahe.apply(b)
+            clahe_color_image = cv2.merge((r_clahe, g_clahe, b_clahe))
+            self.image = Image.fromarray(clahe_color_image.astype('uint8'))
+
 
         # effects
         match self.effect_vars['effect'].get():
