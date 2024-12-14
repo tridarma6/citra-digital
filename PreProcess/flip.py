@@ -10,6 +10,8 @@ for x in range(width):
     for y in range(height):
         flip_vertical[height - 1 - y, x] = img[y, x]
 
+# flip_vertical = img[::-1,:]
+
 cv2.imshow("Gambar asli", img)
 
 cv2.imshow("Flipped Vertical", flip_vertical)
@@ -21,6 +23,9 @@ for x in range(width):
         flip_horizontal[y, width - 1 - x] = img[y, x]
 
 cv2.imshow("Flipped Horizontal", flip_horizontal)
+
+cv2.imwrite("horizontal.png", flip_horizontal)
+cv2.imwrite("vertical.png", flip_vertical)
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()

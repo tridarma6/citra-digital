@@ -15,7 +15,6 @@ rotate_180 = np.zeros_like(img)
 # Melakukan rotasi manual 90 derajat searah jarum jam
 for x in range(width):
     for y in range(height):
-        # Memindahkan piksel dari gambar asli ke gambar baru yang sudah diputar
         rotate_90[x, height - 1 - y] = img[y, x]
 
 # Rotasi negatif 90 derajat
@@ -33,6 +32,10 @@ cv2.imshow("Original Image", img)
 cv2.imshow("Rotated Image 90", rotate_90)
 cv2.imshow("Rotated Image -90", rotate_neg_90)
 cv2.imshow("Rotated Image 180", rotate_180)
+# cv2.imwrite("Original Image.png", img)
+# cv2.imwrite("Rotated Image 90.png", rotate_90)
+# cv2.imwrite("Rotated Image -90.png", rotate_neg_90)
+# cv2.imwrite("Rotated Image 180.png", rotate_180)
 
 # Tunggu hingga ada input dari pengguna untuk menutup jendela
 cv2.waitKey(0)
