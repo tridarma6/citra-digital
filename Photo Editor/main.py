@@ -128,7 +128,7 @@ class App(ctk.CTk):
                 self.image = Image.fromarray(arr_img.astype('uint8'))
 
 
-        # grayscale & invert
+        # grayscale & invert // tri
         if self.color_vars['grayscale'].get():
             self.image = ImageOps.grayscale(self.image)
 
@@ -142,7 +142,7 @@ class App(ctk.CTk):
         if self.effect_vars['contrast'].get() != CONTRAST_DEFAULT:
             self.image = self.image.filter(ImageFilter.UnsharpMask(self.effect_vars['contrast'].get()))
 
-        # threshold
+        # threshold // tri
         if self.effect_vars['threshold'].get() != THRESHOLD_OPTIONS[0]:
             arr_img = np.array(self.image)
             gray_image = cv2.cvtColor(arr_img, cv2.COLOR_BGR2GRAY)
@@ -163,10 +163,10 @@ class App(ctk.CTk):
 
         # effects
         match self.effect_vars['effect'].get():
-            case 'Emboss' : self.image = self.image.filter(ImageFilter.EMBOSS)
-            case 'Find Edges' : self.image = self.image.filter(ImageFilter.FIND_EDGES)
+            case 'Emboss' : self.image = self.image.filter(ImageFilter.EMBOSS) # tri
+            case 'Find Edges' : self.image = self.image.filter(ImageFilter.FIND_EDGES) # tri
             case 'Contour' : self.image = self.image.filter(ImageFilter.CONTOUR)
-            case 'Edge Enhance' : self.image = self.image.filter(ImageFilter.EDGE_ENHANCE)
+            case 'Edge Enhance' : self.image = self.image.filter(ImageFilter.EDGE_ENHANCE) 
 
         self.place_image()
 
