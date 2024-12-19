@@ -70,7 +70,7 @@ class App(ctk.CTk):
     def manipulate_image(self, *args):
         self.image = self.original
 
-        # rotate
+        # rotate / candra
         if self.pos_vars['rotate'].get() != ROTATE_DEFAULT:
             self.image = self.image.rotate(self.pos_vars['rotate'].get())
 
@@ -83,11 +83,11 @@ class App(ctk.CTk):
             if self.pos_vars['rotateOp'].get() == '180':
                 self.image = self.image.rotate(180)
 
-        # zoom
+        # zoom / candra
         if self.pos_vars['zoom'].get() != ZOOM_DEFAULT:
             self.image = ImageOps.crop(image=self.image, border=self.pos_vars['zoom'].get())
 
-        # flip
+        # flip / candra
         if self.pos_vars['flip'].get() != FLIP_OPTIONS[0]:
             if self.pos_vars['flip'].get() == 'Horizontal':
                 self.image = ImageOps.mirror(self.image)
@@ -97,17 +97,17 @@ class App(ctk.CTk):
                 self.image = ImageOps.mirror(self.image)
                 self.image = ImageOps.flip(self.image)
 
-        # brightness & vibrance
-
+        # brightness/ tara
         if self.color_vars['brightness'].get() != BRIGHTNESS_DEFAULT:
             brightness_enhancer = ImageEnhance.Brightness(self.image)
             self.image = brightness_enhancer.enhance(self.color_vars['brightness'].get())
 
+        #  vibrance / tika
         if self.color_vars['vibrance'].get() != VIBRANCE_DEFAULT:
             vibrance_enhancer = ImageEnhance.Color(self.image)
             self.image = vibrance_enhancer.enhance(self.color_vars['vibrance'].get())
 
-        ## RGB
+        ## RGB // tara
 
         # red
         if self.color_vars['red'].get() != RED_DEFAULT:
@@ -128,28 +128,30 @@ class App(ctk.CTk):
                 self.image = Image.fromarray(arr_img.astype('uint8'))
 
 
-        # grayscale & invert
+        # grayscale &  // tri
         if self.color_vars['grayscale'].get():
             self.image = ImageOps.grayscale(self.image)
 
+        # invert // tika
         if self.color_vars['invert'].get():
             self.image = ImageOps.invert(self.image)
 
-        # blur & contrast
+        # blur / tika
         if self.effect_vars['blur'].get() != BLUR_DEFAULT:
             self.image = self.image.filter(ImageFilter.GaussianBlur(self.effect_vars['blur'].get()))
 
+        # contrast / tika
         if self.effect_vars['contrast'].get() != CONTRAST_DEFAULT:
             self.image = self.image.filter(ImageFilter.UnsharpMask(self.effect_vars['contrast'].get()))
 
-        # threshold
+        # threshold // tri
         if self.effect_vars['threshold'].get() != THRESHOLD_OPTIONS[0]:
             arr_img = np.array(self.image)
             gray_image = cv2.cvtColor(arr_img, cv2.COLOR_BGR2GRAY)
             _, threshold_image = cv2.threshold(gray_image, 127, 255, cv2.THRESH_BINARY)
             self.image = Image.fromarray(threshold_image.astype('uint8'))
 
-        # equalization
+        # equalization // candra
         if self.effect_vars['equalize'].get() != EQUALIZE_OPTINS[0]:
             arr_img = np.array(self.image)
             clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
