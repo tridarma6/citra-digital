@@ -61,6 +61,7 @@ class EffectFrame(ctk.CTkFrame):
         DropDownPanel(self, effect_vars['effect'], EFFECT_OPTIONS)
         SegmentedPanel(self, 'Threshold', effect_vars['threshold'], THRESHOLD_OPTIONS)
         SegmentedPanel(self, 'Histogram Equalization', effect_vars['equalize'], EQUALIZE_OPTINS)
+        SegmentedPanel(self, 'Sharpening', effect_vars['sharpening'], SHARPENING_OPTIONS)
         SliderPanel(self, 'Blur', effect_vars['blur'], 0, 30)
         SliderPanel(self, 'Contrast', effect_vars['contrast'], 0, 10)
         RevertButton(self, 

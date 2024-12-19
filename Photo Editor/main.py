@@ -51,7 +51,7 @@ class App(ctk.CTk):
             'vibrance' : ctk.DoubleVar(value=VIBRANCE_DEFAULT),
             'red' : ctk.DoubleVar(value=RED_DEFAULT),
             'green' : ctk.DoubleVar(value=GREEN_DEFAULT),
-            'blue' : ctk.DoubleVar(value=BLUE_DEFAULT)
+            'blue' : ctk.DoubleVar(value=BLUE_DEFAULT),
         }
 
         self.effect_vars = {
@@ -59,7 +59,9 @@ class App(ctk.CTk):
             'contrast' : ctk.IntVar(value=CONTRAST_DEFAULT),
             'effect' : ctk.StringVar(value=EFFECT_OPTIONS[0]),
             'threshold' : ctk.StringVar(value=THRESHOLD_OPTIONS[0]),
-            'equalize' : ctk.StringVar(value=EQUALIZE_OPTINS[0])
+            'equalize' : ctk.StringVar(value=EQUALIZE_OPTINS[0]),
+            'sharpening' : ctk.StringVar(value=SHARPENING_OPTIONS[0])
+
         }
 
         # tracing
@@ -162,13 +164,25 @@ class App(ctk.CTk):
             clahe_color_image = cv2.merge((r_clahe, g_clahe, b_clahe))
             self.image = Image.fromarray(clahe_color_image.astype('uint8'))
 
+        # sharpening
+        if self.effect_vars['sharpening'].get() != SHARPENING_OPTIONS[0]:
+            arr_img = np.array(self.image)
+            # Membuat kernel sharpening
+            kernel = np.array([[0, -1, 0],
+                            [-1, 5, -1],
+                            [0, -1, 0]])
+            
+            # Melakukan filtering gambar menggunakan kernel sharpening
+            sharpened_img = cv2.filter2D(arr_img, -1, kernel)
+            self.image = Image.fromarray(sharpened_img.astype('uint8'))
+    
 
         # effects
         match self.effect_vars['effect'].get():
-            case 'Emboss' : self.image = self.image.filter(ImageFilter.EMBOSS)
-            case 'Find Edges' : self.image = self.image.filter(ImageFilter.FIND_EDGES)
+            case 'Emboss' : self.image = self.image.filter(ImageFilter.EMBOSS) # tri
+            case 'Find Edges' : self.image = self.image.filter(ImageFilter.FIND_EDGES) # tri
             case 'Contour' : self.image = self.image.filter(ImageFilter.CONTOUR)
-            case 'Edge Enhance' : self.image = self.image.filter(ImageFilter.EDGE_ENHANCE)
+            case 'Edge Enhance' : self.image = self.image.filter(ImageFilter.EDGE_ENHANCE) 
 
         self.place_image()
 
